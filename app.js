@@ -13,10 +13,18 @@ app.use(express.urlencoded({ extended: true }));
 /**
  Create my-route
 **/
+/** specify the directory from where to serve static assets such as JavaScript, CSS, images **/
+app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use('/jquery-ui', express.static(__dirname + '/node_modules/jquery-ui/dist/'));
+
+/** remove fix route and use path solution **/
+/* 
 app.get('/', function(req, res) {
     res.sendFile('public/index.html', { root: __dirname });
 });
+**/
 
 app.get('/welcome', (req, res) =>
   res.send({
@@ -47,11 +55,11 @@ app.get('/ok', (req, res) =>{
 
 
 app.get('/student/:student_id', function(req, res) {
-    util.fakeStudentbyInfo(req.params.student_id, function (result) {
-        res.json(result);
-    });
+  util.findStudentbyId(req.params.student_id, function (result) {
+      //res.json(result);
+      res.send(result);
+  });
 });
-
 
 var port = process.env.PORT || 3000;
 
