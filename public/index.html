@@ -18,8 +18,9 @@
 <div id="tabs">
   <ul>
     <li><a href="#tabs-1">1-แบบฟอร์มลงทะเบียน</a></li>
-    <li><a href="#tabs-2">2-รายชื่อนิสิต(ALL)</a></li>
-    <li><a href="#tabs-3">3-ข้อมูลนิสิต</a></li>
+    <li><a href="#tabs-2">2-Login</a></li>
+    <li><a href="#tabs-3">2-รายชื่อนิสิต(ALL)</a></li>
+    <li><a href="#tabs-4">3-ข้อมูลนิสิต</a></li>
   </ul>
   <div id="tabs-1">  
     <form id="my-form">
@@ -36,10 +37,19 @@
   </form>
   </div>
   <div id="tabs-2">
+    <form id="my-form">
+      <input type="email" id="loginEmail" name="loginEmail" placeholder="Email" />
+      <br/>
+      <input type="password" id="loginPassword" name="loginPassword" placeholder="รหัสผ่าน" />
+      <br/>
+      <input type="button" id="LoginSubmit" value="loginSubmit"/>
+  </form>
+  </div>
+  <div id="tabs-3">
     <button class="ui-button ui-widget ui-corner-all" id="btnRequest">Load</button>
     <div id="myDynamicTable2"></div>
   </div>
-  <div id="tabs-3">
+  <div id="tabs-4">
   
   </div>
 </div><!-- tabs-->
@@ -57,10 +67,32 @@
                  console.log("tabs-2");
              }else if(tabIndex == 2){
                  console.log("tabs-3");
+             }else if(tabIndex == 3){
+                 console.log("tabs-4");
              }
          }
      });
 
+     //btnSubmit
+     $('#LoginSubmit').click( function(){
+          //console.log("Submit");
+          $.ajax({
+            method: "POST",
+            url: "https://tools.ecpe.nu.ac.th/network/api/login",
+            dataType : 'json',
+            headers: { 
+              'Content-Type': 'application/json',
+              "Accepts": "application/json",
+            },
+            data:JSON.stringify( { "email": $('#loginEmail').val(), "password": $('#loginPassword').val() } ),
+            success: function(data){
+              console.log(data);
+             
+            }
+          });
+
+        });
+     
      //btnRequest
      $('#btnRequest').click( function(){
        // url from where we want to get the data
