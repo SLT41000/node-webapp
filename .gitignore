@@ -5,4 +5,4 @@ node_modules/*
 config.js
 **/*.bak
 *.bak
-http-req
+http-req/*
