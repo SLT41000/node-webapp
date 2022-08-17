@@ -1,5 +1,4 @@
 <!--index.html-->
-
 <!doctype html>
 <html>
 <head>
@@ -18,6 +17,7 @@
 
 </head>
 <body>
+  
 <div id="tabs">
   <ul>
     <li><a href="#tabs-1">1-แบบฟอร์มลงทะเบียน</a></li>
@@ -53,27 +53,16 @@
     <div id="myDynamicTable2"></div>
   </div>
   <div id="tabs-4">
-    <div class="flex justify-center">
-      <div class="rounded-lg shadow-lg bg-white max-w-sm">
-        <a href="#!">
-          <img class="rounded-t-lg" src="public/images/Profile.jpg" alt=""/>
-        </a>
-        <div class="p-6">
-          <h5 class="text-gray-900 text-xl font-medium mb-2">I'm pancake</h5>
-          <p class="text-gray-700 text-base mb-4">
-            Zzz.Zzz 
-          </p>
-          <button type="button" class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Button</button>
-        </div>
-      </div>
-    </div>
-
+    
   </div>
 </div><!-- tabs-->
 <script type="text/javascript">
+  
+
+
   $(document).ready(function () {
      console.log("Onload");
-
+    
      $("#tabs").tabs({
          activate: function(event, ui) {
              var tabIndex = $("#tabs").tabs("option", "active");
@@ -109,7 +98,8 @@
           });
 
         });
-     
+    
+        
      //btnRequest
      $('#btnRequest').click( function(){
        // url from where we want to get the data
@@ -120,7 +110,7 @@
          headers: { 
            'Content-Type': 'application/json',
            "Accepts": "application/json",
-           "Authorization": "Bearer Token",
+           "Authorization": "Bearer "
          },
          success: function(data){
            console.log(data);
@@ -272,30 +262,68 @@
         
         var elementButtonSave = document.createElement("input");
         elementButtonSave.type = "button";
-        elementButtonSave.id = "btnConfirm"+idItem;
+        elementButtonSave.id = "btnConfirm";
+        
         elementButtonSave.value = "รายละเอียด";
       //elementStartDate.setAttribute("width","80");
        // elementButtonSave.setAttribute("style","width:50px;");
         //elementButtonSave.setAttribute("class","tealA400");
         
-       
-        elementButtonSave.setAttribute("onclick","popupConfirm('"+items[i].fullname+"',this)");
+        elementButtonSave.setAttribute("onclick","getData('"+items[i].student_id+"')");
+        //lab6
+        
+        
         
 
         cell5.appendChild(elementButtonSave);
         
         
         tr.appendChild(cell5);
+
+       
         //tr.appendChild(td);
       }
     }
+    
     }
     myTableDiv.appendChild(table);
   }
-
+  
   function popupConfirm(fullname,objElement){
     alert(fullname);
   }
+  function getData(student_id){
+          //change tab
+          console.log(student_id)
+          $("#tabs").tabs("option", "active", 3);
+          
+          $.ajax({
+          method: "GET",
+          url: "https://tools.ecpe.nu.ac.th/network/api/student/"+student_id,
+          dataType : 'json',
+          headers: { 
+           'Content-Type': 'application/json',
+           "Accepts": "application/json",
+           "Authorization": "Bearer "
+          },
+          success: function(data){
+          
+           text="<div class=\"flex justify-center\">"+"<div class=\"block rounded-lg shadow-lg bg-blue-600 max-w-sm text-center\">"+"<div class=\"py-3 px-6 border-b border-gray-300\">"
+           text+="<br>"+"</div>"+"<div class=\"p-6\">"+"<h5 class=\"text-white text-xl font-medium mb-2\">"+data[0].fullname+"</h5>"
+           text+="<p class=\"text-white text-base mb-4\">"+data[0].student_id+"<br>"+data[0].position+"<br>"+" gpa : "+data[0].gpa+"</p>"
+           text+="</div>"+"<div class=\"py-3 px-6 border-t border-gray-300 text-gray-600\">"+"</div>"+"</div>"
+           
+           document.getElementById("tabs-4").innerHTML+=text
+           document.getElementById("tabs-4").innerHTML+="<br>"
+           
+           
+         }
+       });
+     ;
+          
+          
+
+        }
 </script>
 </body>
 

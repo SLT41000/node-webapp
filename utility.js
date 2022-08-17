@@ -3,7 +3,7 @@
 const { query } = require("express");
 const request = require("request-promise");
 const EXTERNAL_API="https://tools.ecpe.nu.ac.th/network/api/student/"; // put url
-const accessToken="Token"; // put access token
+const accessToken=""; // put access token
 const student = {
   student_id: 63364772,
   name: '', // replace with your full name.
